@@ -1,5 +1,80 @@
+@import url("https://fonts.googleapis.com/css?family=Sniglet|Raleway:700,400,300,100");
+:root {
+    --black: hsl(0, 0%, 0%);
+    --white: hsl(0, 0%, 100%);
+    --slate-900: hsl(222, 47%, 11%);
+    --slate-800: hsl(222, 47%, 15%);
+    --zinc-200: hsl(0, 0%, 80%);
+    --zinc-300: hsl(0, 0%, 75%);
+    --zinc-400: hsl(0, 0%, 65%);
+    --zinc-500: hsl(0, 0%, 50%);
+    --zinc-600: hsl(0, 0%, 40%);
+    --zinc-700: hsl(0, 0%, 30%);
+    --emerald-300: hsl(163, 72%, 41%);
+    --emerald-400: hsl(163, 72%, 31%);
+    --emerald-500: hsl(163, 72%, 21%);
+    --emerald-600: hsl(163, 72%, 11%);
+    --emerald-700: hsl(163, 72%, 1%);
+    --red-100: hsl(0, 100%, 90%);
+    --red-200: hsl(0, 100%, 70%);
+    --red-300: hsl(0, 100%, 60%);
+    --red-400: hsl(0, 100%, 50%);
+    --red-500: hsl(0, 100%, 40%);
+    --red-600: hsl(0, 100%, 30%);
+    --red-700: hsl(0, 100%, 20%);
+    --red-800: hsl(0, 100%, 10%);
+    --sky-200: hsl(200, 100%, 90%);
+    --sky-300: hsl(200, 100%, 70%);
+    --sky-400: hsl(200, 100%, 60%);
+    --sky-500: hsl(200, 100%, 50%);
+    --sky-600: hsl(200, 100%, 40%);
+    --sky-700: hsl(200, 100%, 30%);
+    --sky-800: hsl(200, 100%, 20%);
+    --font-size-30: 3rem;
+    --font-size-28: 2.8rem;
+    --font-sixe-24: 2.4rem;
+    --font-size-20: 2rem;
+    --font-size-18: 1.8rem;
+    --font-size-16: 1.6rem;
+    --font-size-14: 1.4rem;
+    --font-size-12: 1.2rem;
+    --font-size-10: 1rem;
+    --font-size-8: 0.8rem;
+    --font-size-6: 0.6rem;
+    --font-size-4: 0.4rem;
+    --font-bold: 700;
+    --font-regular: 400;
+    --font-light: 300;
+    --font-thin: 100;
+    --font-italic: italic;
+    --font-raleway: 'Raleway', sans-serif;
+    --font-sniglet: 'Sniglet', monospace;
+    --width-full: 100%;
+    --height-full: 100%;
+    --width-screen: 100vw;
+    --height-screen: 100vh;
+    --width-auto: auto;
+    --height-auto: auto;
+    --text-center: center;
+    --hidden: none;
+    
+  }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+html,
+body {
+    background-color: var(--slate-900);
+    color: var(--white);
+    font-size: var(--font-size-10);
+    font-family: var(--font-raleway);
+    width: var(--width-full);
+    height: var(--height-full);
+}
+
+
+
