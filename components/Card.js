@@ -7,28 +7,66 @@ template.innerHTML = `
         border-radius: 0.5rem;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         padding: 1rem;
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
+        width: var(--card-width, 350px);
+        height: var(--card-height, 300px);
 
+    }
+    .poetry-card-slot-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      gap: 10px;  
+    }
+    .poetry-card-header {
+        align-self: center;
+        height: clac(var(--card-height, 300px) * 0.1 - 10px);
+        color: var(--card-header-text, #777);
+    }
+    .poetry-card-content {
+      height: calc(var(--card-height, 300px) * 0.6 - 10px);
+      letter-spacing: 1px;
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: var(--card-content-text, #000);
+    }
+    .poetry-card-footer {
+        align-self: end;
+        height: calc(var(--card-height, 300px) * 0.1 - 10px );
+    }
+    .poetry-card-footer button {
+        background-color: var(--card-btn-bg, green);
+        color: var(--card-btn-text, #FFF); 
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: none;
+        width: 100%;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        outline: none;
     }
   </style>
   <div class="poetry-card-wrapper">
-    <div class="poetry-card-header">
-      <slot name="header"></slot>
-    </div>
-    <div class="poetry-card-body">
-      <slot name="body"></slot>
-    </div>
-    <div class="poetry-card-footer">
-      <slot name="footer"></slot>
-    </div>
+    <slot name="content">
+      <div class="poetry-card-slot-wrapper">
+        <div class="poetry-card-header">
+          <h2>Card Title</h2>
+        </div>
+        <div class="poetry-card-content">
+          <p>Card content</p>
+        </div>
+        <div class="poetry-card-footer">
+          <button>label</button>
+        </div>
+      </div>
+     </slot>
   </div>`;
 
 class Card extends HTMLElement {
     constructor() {
         super();
-        this.root = this.attachShadow({ mode: "closed" });
+        this.root = this.attachShadow({ mode: "open" });
         let clone = template.content.cloneNode(true);
         this.root.append(clone);
     }   
@@ -47,15 +85,33 @@ class Card extends HTMLElement {
     
     attributeChangedCallback(name, oldValue, newValue) {
         console.log("Card element attributes changed.", name);
-        if(name.toLowerCase() === 'customstyles') {
-          const sheet = new CSSStyleSheet();
-          sheet.replaceSync(newValue);
-          this.root.adoptedStyleSheets = [sheet]; 
+        
+        switch(name.toLowerCase()) {
+          case 'customstyles':
+            const sheet = new CSSStyleSheet();
+            sheet.replaceSync(newValue);
+            this.root.adoptedStyleSheets = [sheet]; 
+            break;  
+
+          case 'title':
+            this.root.querySelector('.poetry-card-header h2').textContent = newValue;
+            break;  
+
+          case 'content':
+            this.root.querySelector('.poetry-card-content p').textContent = newValue;
+            break;  
+
+          case 'label':
+            this.root.querySelector('button').textContent = newValue;
+            break;  
+
+          default:
+            break;
         }
     }
 
     static get observedAttributes() {
-        return ['customstyles'];
+        return ['customstyles', 'title', 'content', 'label'];
     }
 
     get customstyles() {
@@ -65,6 +121,26 @@ class Card extends HTMLElement {
       this.setAttribute('customstyles', value);
     }
   
+    get title() {
+      return this.getAttribute('title');
+    }
+    set title(value) {
+      this.setAttribute('title', value);
+    }
+  
+    get content() {
+      return this.getAttribute('content');
+    }
+    set content(value) {
+      this.setAttribute('content', value);
+    }
+  
+    get label() {
+      return this.getAttribute('label');
+    }
+    set label(value) {
+      this.setAttribute('label', value);
+    }
 }
 
 window.customElements.define("poetry-card", Card);

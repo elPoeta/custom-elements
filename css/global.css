@@ -57,7 +57,7 @@
     --height-auto: auto;
     --text-center: center;
     --hidden: none;
-    
+
   }
 
 * {
@@ -75,6 +75,8 @@ body {
     width: var(--width-full);
     height: var(--height-full);
 }
+
+
 
 
 

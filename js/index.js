@@ -10,8 +10,8 @@ const init = () => {
       font-size: 2rem;
       margin-block: 1rem;
     }`;
-    console.log(sheet)
-    document.querySelector('poetry-card').setAttribute('customstyles', sheet);
+    //console.log(sheet)
+    //document.querySelector('poetry-card').setAttribute('customstyles', sheet);
 }
 
 window.addEventListener("load", init);
