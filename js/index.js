@@ -12,6 +12,17 @@ const init = () => {
     }`;
     //console.log(sheet)
     //document.querySelector('poetry-card').setAttribute('customstyles', sheet);
+    const card = document.createElement('poetry-card');
+    card.setRecoveryData({ test: 'this is a test'});
+    root.append(card);
+    document.querySelector('poetry-card')
+     .addEventListener('recovery', (e) => {
+        const { element } = e.detail
+        if(element.tagName.toLowerCase() === 'h2') {
+         console.log(e.detail);
+        }
+     })
+
 }
 
 window.addEventListener("load", init);

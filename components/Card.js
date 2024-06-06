@@ -64,15 +64,22 @@ template.innerHTML = `
   </div>`;
 
 class Card extends HTMLElement {
+
+    #recoveryData
     constructor() {
         super();
-        this.root = this.attachShadow({ mode: "open" });
+        this.#recoveryData = {};
+        this.root = this.attachShadow({ mode: "closed" });
         let clone = template.content.cloneNode(true);
         this.root.append(clone);
+        this.root.querySelector('slot').addEventListener('click', this.#handleClick.bind(this));
+      
     }   
 
     connectedCallback() {
-        console.log("Card element added to page.");
+        if(!this.hasAttribute('label')) {
+          this.root.querySelector('button').style.display = 'none';
+        }
     }
 
     disconnectedCallback() {
@@ -83,9 +90,7 @@ class Card extends HTMLElement {
         console.log("Card element moved to new page.");
     }
     
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log("Card element attributes changed.", name);
-        
+    attributeChangedCallback(name, oldValue, newValue) {   
         switch(name.toLowerCase()) {
           case 'customstyles':
             const sheet = new CSSStyleSheet();
@@ -105,13 +110,17 @@ class Card extends HTMLElement {
             this.root.querySelector('button').textContent = newValue;
             break;  
 
-          default:
+          case 'recoverydata':
+            this.setRecoveryData(newValue);
+            break;
+ 
+            default:
             break;
         }
     }
 
     static get observedAttributes() {
-        return ['customstyles', 'title', 'content', 'label'];
+        return ['customstyles', 'title', 'content', 'label', 'recoverydata'];
     }
 
     get customstyles() {
@@ -140,6 +149,37 @@ class Card extends HTMLElement {
     }
     set label(value) {
       this.setAttribute('label', value);
+    }
+
+    get recoverydata() {
+      return this.getAttribute('recoverydata');
+    }
+    set recoverydata(value) {
+      this.setRecoveryData(value);
+      this.setAttribute('recoverydata', value);
+
+    }
+/*
+    getRecoveryData() {
+      return this.#recoveryData;
+    }
+*/
+    setRecoveryData(value) {
+      if(typeof value === "string") {
+         value = JSON.parse(value); 
+      }
+      if(!value || !(value instanceof Object)) {
+        throw new Error("Recovery data must be an object");
+      }
+      this.#recoveryData = value;
+    } 
+
+    #handleClick(ev) {
+      const element = ev.target;
+      ev.stopPropagation(); 
+      const ce = new CustomEvent('recovery', { detail: { data: this.#recoveryData, element } });
+      this.dispatchEvent(ce);
+      
     }
 }
 
