@@ -29,8 +29,11 @@ template.innerHTML = `
   </div>`;
 
 class Table extends HTMLElement {
+
+    #headers
     constructor() {
         super();
+        this.#headers = [];
         this.root = this.attachShadow({ mode: "open" });
         let clone = template.content.cloneNode(true);
         this.root.append(clone);
@@ -49,13 +52,44 @@ class Table extends HTMLElement {
     }
     
     attributeChangedCallback(name, oldValue, newValue) {
-        console.log("table element attributes changed.");
+        switch(name.toLowerCase()) {
+          case 'headers':
+            this.#headers = newValue.split(',');
+            this.root.querySelector('thead tr').innerHTML = this.#headers.map((header) => `<th data-label="${header}">${header}</th>`).join('');
+            break;  
+ 
+          default:
+            break;
+        }
     }
 
     static get observedAttributes() {
-        return [];
+        return ['headers'];
     }
 
+    get headers() {
+        return this.getAttribute('headers');
+    }
+
+    set headers(value) {
+        this.setAttribute('headers', value);
+    }
+
+    set data(data) {
+      const tableBody = this.root.querySelector('tbody');
+      const rows = data.map((rowData) => {
+        const row = document.createElement('tr');
+        const cells = rowData.map((cellData,index) => {
+          const cell = document.createElement('td');
+          cell.dataset.label = this.#headers[index];
+          cell.innerHTML = `<input type="text" value="${cellData}" />`;
+          return cell;
+        });
+        row.append(...cells);
+        return row;
+      });
+      tableBody.append(...rows);
+    }
 }
 
 window.customElements.define("poetry-table", Table);

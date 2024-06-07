@@ -26,6 +26,13 @@ const init = () => {
      });*/
 
      const table = document.createElement('poetry-table');
+     table.setAttribute('headers', 'id,title,visitas,fecha,duracion,descripcion,precio,imagen,acciones');
+     table.data = [
+       [1, 'test', 1, '2020-01-01', 1, 'test', 1, 'https://placeimg.com/640/480/any', ''],  
+       [2, 'test', 1, '2020-01-01', 1, 'test', 1, 'https://placeimg.com/640/480/any', ''],
+       [3, 'test', 1, '2020-01-01', 1, 'test', 1, 'https://placeimg.com/640/480/any', ''],
+       [4, 'test', 1, '2020-01-01', 1, 'test', 1, 'https://placeimg.com/640/480/any', ''],
+      ]
 
      root.append(table);
 }
