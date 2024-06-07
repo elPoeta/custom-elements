@@ -84,6 +84,7 @@ class Card extends HTMLElement {
 
     disconnectedCallback() {
         console.log("Card element removed from page.");
+        this.root.querySelector('slot').removeEventListener('click', this.#handleClick.bind(this));
     }
 
     adoptedCallback() {
@@ -109,10 +110,6 @@ class Card extends HTMLElement {
           case 'label':
             this.root.querySelector('button').textContent = newValue;
             break;  
-
-          case 'recoverydata':
-            this.setRecoveryData(newValue);
-            break;
  
             default:
             break;
@@ -120,7 +117,7 @@ class Card extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['customstyles', 'title', 'content', 'label', 'recoverydata'];
+        return ['customstyles', 'title', 'content', 'label'];
     }
 
     get customstyles() {
@@ -159,11 +156,11 @@ class Card extends HTMLElement {
       this.setAttribute('recoverydata', value);
 
     }
-/*
+
     getRecoveryData() {
       return this.#recoveryData;
     }
-*/
+
     setRecoveryData(value) {
       if(typeof value === "string") {
          value = JSON.parse(value); 

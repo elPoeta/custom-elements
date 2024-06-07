@@ -21,7 +21,7 @@ const init = () => {
         if(element.tagName.toLowerCase() === 'h2') {
          console.log(e.detail);
         }
-     })
+     });
 
 }
 
