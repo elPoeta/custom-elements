@@ -1,8 +1,10 @@
 import "../components/Sample.js";
 import "../components/Card.js";
+import "../components/Table.js";
+
 const init = () => {
     const root = document.getElementById("root");
-    
+    /*
     const sheet = `.poetry-card-wrapper { 
       color: red; 
       background-color: cornflowerblue;
@@ -21,8 +23,11 @@ const init = () => {
         if(element.tagName.toLowerCase() === 'h2') {
          console.log(e.detail);
         }
-     });
+     });*/
 
+     const table = document.createElement('poetry-table');
+
+     root.append(table);
 }
 
 window.addEventListener("load", init);
